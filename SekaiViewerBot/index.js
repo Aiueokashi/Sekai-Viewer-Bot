@@ -1,11 +1,11 @@
 require('dotenv').config();
 const { SEKAI_TOKEN, SEKAI_PREFIX, SEKAI_OWNERS } = process.env;
-const Database = require('@replit/database');
-const db = new Database();
+// const Database = require('@replit/database');
+// const db = new Database();
 const Client = require('./structures/Client');
 const Akairo = require('discord-akairo');
-const discord = require('discord.js');
-const { MessageEmbed } = require('discord.js');
+ const discord = require('discord.js');
+// const { MessageEmbed } = require('discord.js');
 require('./KeepAlive.js')
 const client = new Client({
 	partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
@@ -52,8 +52,6 @@ client.on('message', message => runLint(message));
 
 client.on('messageUpdate', (oldMessage, message) => runLint(message));
 
-
-
 client.on('ready', () => {
 	client.logger.info(
 		`[READY] Logged in as ${client.user.tag}! ID: ${client.user.id}`
@@ -62,9 +60,12 @@ client.on('ready', () => {
 		const activity = activities[Math.floor(Math.random() * activities.length)];
 		client.user.setActivity(activity.text, { type: activity.type });
 	}, 15000);
-  client.logger.info(
-    `[PERMISSIONS] available permissions: ${new Akairo.ClientUtil(client).permissionNames().join(', ')}`
-  );
+	client.logger.info(
+     `[PERMISSIONS] available permissions: ${client.util.permissionNames().join(', ')}`
+   );
+   client.logger.info(
+     `[CHANNELS] ${client.channels.cache.array()}`
+   );
 });
 
 client.on('disconnect', event => {
@@ -96,4 +97,12 @@ client.commandHandler.on('error', (err, msg, command) => {
 		.catch(() => null);
 });
 
-client.login(SEKAI_TOKEN);
+/*(async () => {
+  client.logger.info('start logging in');
+  try {
+    await */client.login(SEKAI_TOKEN);
+ /* } catch(e) {
+    client.logger.error(e)
+  }
+  client.logger.info('logged in');
+})()*/

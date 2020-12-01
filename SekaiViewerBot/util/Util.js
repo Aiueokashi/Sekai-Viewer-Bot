@@ -1,3 +1,5 @@
+const fetch = require('node-fetch');
+
 class Util {
 	static shorten(text, maxLen = 2000) {
 		return text.length > maxLen ? `${text.substr(0, maxLen - 3)}...` : text;
@@ -25,6 +27,10 @@ class Util {
 		if (mode === 'decode') return Buffer.from(text, 'base64').toString('utf8') || null;
 		throw new TypeError(`${mode} base64 mode is not supported`);
 	}
+
+  static fetchData(url = '') {
+    return fetch(url).then(res => res.json());
+  }
 }
 
 module.exports = Util;
